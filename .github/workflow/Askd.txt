@@ -499,7 +499,7 @@ task.wait(.005)
 	sound69.PlaybackSpeed = 1
 	timeposcur = sound69.TimePosition 
 sound69:Play()
-	playanim(105422344378204)
+	playanim(105422344378204,2.51)
 else
 	stopanim()
 	sound69.PlaybackSpeed = 1
@@ -1266,7 +1266,7 @@ elseif k == "leftbracket" then
         stopanim()
         dancing = true
         task.wait(.005)
-        sound69.SoundId = customasset("Dances/Skeleton.mp3")
+        sound69.SoundId = customasset("Dances/SkeletonOrchestra.mp3")
         timeposcur = sound69.TimePosition 
 sound69:Play()
         playanim(120675323439108)
