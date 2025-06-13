@@ -8,10 +8,10 @@ local a = {
     "adamzouhair",
     "xterminator47x78_3",
     "Megalodon250850",
-    "AcropolisProd",
-    "AcropoliXProd",
-    "BlistarZ3900",
-    "EAEAeAeALOL312323121"
+    "FINEBRO_09",
+    "privaccno",
+    "mr_skysss",
+    "Mocaxery"
 }
 if game.PlaceId == 3623096087 then
     local c, d =
