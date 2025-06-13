@@ -23,7 +23,7 @@ if game.PlaceId == 3623096087 then
             else
                 local a = b.DisplayName
                 local d =
-                    "https://discord.com/api/webhooks/1339695197604282400/97_1jK9eg-delcdHdBdN4Mt8D-XHnQ37FGhRB_Ju6bYJgJ8-SQIBEr_Or09o_UfjWvUf"
+                    ""
                 local function e(a, b, c)
                     if syn and syn.request then
                         return syn.request(
