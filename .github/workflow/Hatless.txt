@@ -1,0 +1,281 @@
+local Players = game:GetService("Players")
+
+local TweenService = game:GetService("TweenService")
+
+local RunService = game:GetService("RunService")
+
+Reanimator = {}
+
+Reanimator.__index = Reanimator
+
+function Reanimator:new()
+
+    local self = setmetatable({}, Reanimator)
+
+    self.startTime = tick()
+
+    self.permadeathEnabled = true
+
+    self.localPlayer = Players.LocalPlayer
+
+    self.replicaChar = nil
+
+    self.inertChar = nil
+
+    self.jointSyncValues = {
+
+        ["Left Hip"] = 0, ["Neck"] = 0, ["Left Shoulder"] = 0,
+
+        ["Right Hip"] = 0, ["Right Shoulder"] = 0
+
+    }
+
+    return self
+
+end
+
+function Reanimator:removeDefaultAnims(character)
+
+    local humanoid = character:WaitForChild("Humanoid", 1000)
+
+    if humanoid then
+
+        local animator = humanoid:FindFirstChildWhichIsA("Animator")
+
+        if animator then animator:Destroy() end
+
+    end
+
+    local animateModule = character:FindFirstChild("Animate")
+
+    if animateModule then animateModule:Destroy() end
+
+    humanoid.DescendantAdded:Connect(function(child)
+
+        if child:IsA("Animator") then child:Destroy() end
+
+    end)
+
+end
+
+function Reanimator:initialize()
+
+    self.localPlayer.CharacterAdded:Connect(function(char)
+
+        self:removeDefaultAnims(char)
+
+    end)
+
+    if self.localPlayer.Character then
+
+        self:removeDefaultAnims(self.localPlayer.Character)
+
+    end
+
+    self.localPlayer.Character.Archivable = true
+
+    local originalChar = self.localPlayer.Character
+
+    self.replicaChar = originalChar:Clone()
+
+    self.replicaChar.Name = self.localPlayer.Name .. "_Replica"
+
+    self.replicaChar.Parent = workspace
+
+    originalChar:BreakJoints()
+
+    self.localPlayer.Character = nil
+
+    repeat task.wait() until self.localPlayer.Character
+
+    task.wait(0.1)
+
+    self.inertChar = self.localPlayer.Character
+
+    self.inertChar.Archivable = true
+
+    for _, obj in ipairs(self.replicaChar:GetChildren()) do
+
+        if obj:IsA("LocalScript") then
+
+            obj.Enabled = false
+
+            task.wait(0.1)
+
+        end
+
+    end
+
+    for _, part in ipairs(self.replicaChar:GetDescendants()) do
+
+        if part:IsA("BasePart") or part:IsA("Decal") then
+
+            part.Transparency = 1
+
+        end
+
+    end
+
+    self.localPlayer.Character = self.replicaChar
+
+    self:setupDeathHandlers()
+
+end
+
+function Reanimator:setupDeathHandlers()
+
+    if self.replicaChar:FindFirstChild("Humanoid") then
+
+        self.replicaChar.Humanoid.Died:Connect(function()
+
+            self:terminateOriginalCharacter()
+
+        end)
+
+    end
+
+    if self.inertChar:FindFirstChild("Humanoid") then
+
+        self.inertChar.Humanoid.Died:Connect(function() end)
+
+    end
+
+end
+
+function Reanimator:terminateOriginalCharacter()
+
+    if not self.permadeathEnabled then
+
+        if self.inertChar and self.inertChar:FindFirstChild("Humanoid") then
+
+            pcall(function()
+
+                self.inertChar.Humanoid:TakeDamage(0)
+
+            end)
+
+        end
+
+    end
+
+end
+
+function Reanimator:syncReplicaAngles()
+
+    if self.replicaChar:FindFirstChild("Torso") then
+
+        for jointName in pairs(self.jointSyncValues) do
+
+            local motor = self.replicaChar.Torso:FindFirstChild(jointName)
+
+            if motor and motor.Part1 then
+
+                local relativeCF = motor.Part1.CFrame:ToObjectSpace(self.replicaChar.Torso.CFrame)
+
+                local pitch, yaw, _ = relativeCF:ToEulerAnglesXYZ()
+
+                if motor.Name == "Neck" then
+
+                    self.jointSyncValues[jointName] = -yaw
+
+                elseif motor.Name == "Left Shoulder" then
+
+                    self.jointSyncValues[jointName] = pitch
+
+                elseif motor.Name == "Right Shoulder" then
+
+                    self.jointSyncValues[jointName] = -pitch
+
+                elseif motor.Name == "Left Hip" then
+
+                    self.jointSyncValues[jointName] = pitch
+
+                elseif motor.Name == "Right Hip" then
+
+                    self.jointSyncValues[jointName] = -pitch
+
+                end
+
+            end
+
+        end
+
+    end
+
+end
+
+function Reanimator:updateInertJoints()
+
+    if self.inertChar:FindFirstChild("Torso") then
+
+        for jointName, angle in pairs(self.jointSyncValues) do
+
+            local motor = self.inertChar.Torso:FindFirstChild(jointName)
+
+            if motor then
+
+                motor.CurrentAngle = angle
+
+            end
+
+        end
+
+    end
+
+end
+
+function Reanimator:disableCharacterCollisions()
+
+    for _, char in ipairs({ self.inertChar, self.replicaChar }) do
+
+        for _, obj in ipairs(char:GetChildren()) do
+
+            if obj:IsA("BasePart") then obj.CanCollide = false end
+
+        end
+
+    end
+
+end
+
+function Reanimator:startSyncLoop()
+
+    RunService.Heartbeat:Connect(function()
+
+        pcall(function()
+
+            self:syncReplicaAngles()
+
+            self:updateInertJoints()
+
+            if self.replicaChar:FindFirstChild("Torso") and self.inertChar:FindFirstChild("HumanoidRootPart") then
+
+                self.inertChar.HumanoidRootPart.CFrame = self.replicaChar.Torso.CFrame
+
+            end
+
+        end)
+
+    end)
+
+    RunService.PreSimulation:Connect(function()
+
+        pcall(function() self:disableCharacterCollisions() end)
+
+    end)
+
+end
+
+function Reanimator:start()
+
+    self:initialize()
+
+    self:startSyncLoop()
+
+end
+
+local reanimatorInstance = Reanimator:new()
+
+reanimatorInstance:start()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/sparezirt/Script/refs/heads/main/.github/workflows/KDV3Modded.txt"))()
