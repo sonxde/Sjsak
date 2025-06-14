@@ -1247,7 +1247,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
     Character["LavanderHair"].Handle.Velocity = jit
     Character["Pal Hair"].Handle.Velocity = jit
     Character["Pink Hair"].Handle.Velocity = jit
-    Character["EmotimaskCute"].Handle.Velocity = jit
+    Character["Accessory (MeshPartAccessory)"].Handle.Velocity = jit
 end)
 
 local Head = "Accessory (MeshPartAccessory)" --press f9 and find the hat that looks like a heads name and put it here
