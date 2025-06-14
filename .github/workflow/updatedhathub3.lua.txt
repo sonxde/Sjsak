@@ -106,7 +106,7 @@ TextLabel_5.BorderSizePixel = 0
 TextLabel_5.Position = UDim2.new(-0.115740731, 0, 0, 0)
 TextLabel_5.Size = UDim2.new(0, 155, 0, 31)
 TextLabel_5.Font = Enum.Font.SourceSansBold
-TextLabel_5.Text = "8/26/2020 dam"
+TextLabel_5.Text = "??/??/2025 fix"
 TextLabel_5.TextColor3 = Color3.fromRGB(255, 163, 26)
 TextLabel_5.TextScaled = true
 TextLabel_5.TextSize = 14.000
@@ -119,7 +119,7 @@ TextLabel_6.BorderSizePixel = 0
 TextLabel_6.Position = UDim2.new(-0.00087723881, 0, 0.171270713, 0)
 TextLabel_6.Size = UDim2.new(0, 131, 0, 31)
 TextLabel_6.Font = Enum.Font.SourceSansBold
-TextLabel_6.Text = "Welp"
+TextLabel_6.Text = "8/26/2020 dam.. Welp"
 TextLabel_6.TextColor3 = Color3.fromRGB(255, 163, 26)
 TextLabel_6.TextScaled = true
 TextLabel_6.TextSize = 14.000
@@ -145,7 +145,7 @@ TextLabel_8.BorderSizePixel = 0
 TextLabel_8.Position = UDim2.new(0.0593080893, 0, 0.502762437, 0)
 TextLabel_8.Size = UDim2.new(0, 190, 0, 32)
 TextLabel_8.Font = Enum.Font.SourceSansBold
-TextLabel_8.Text = "No future updates"
+TextLabel_8.Text = "No future updates😢"
 TextLabel_8.TextColor3 = Color3.fromRGB(255, 163, 26)
 TextLabel_8.TextScaled = true
 TextLabel_8.TextSize = 14.000
@@ -158,7 +158,7 @@ TextLabel_9.BorderSizePixel = 0
 TextLabel_9.Position = UDim2.new(0.00375253335, 0, 0.331491709, 0)
 TextLabel_9.Size = UDim2.new(0, 207, 0, 31)
 TextLabel_9.Font = Enum.Font.SourceSansBold
-TextLabel_9.Text = "Very old"
+TextLabel_9.Text = "Very old hub"
 TextLabel_9.TextColor3 = Color3.fromRGB(255, 163, 26)
 TextLabel_9.TextScaled = true
 TextLabel_9.TextSize = 14.000
@@ -1230,7 +1230,7 @@ SexDoll.TextColor3 = Color3.fromRGB(0, 0, 0)
 SexDoll.TextSize = 30.000
 SexDoll.TextWrapped = true
 SexDoll.MouseButton1Down:connect(function()
-EquipHats("-gh 4904153006 4246228452 4911305457 4822592866 3992084515 14815761 48474294 63690008 62234425 451220849")
+EquipHats("-gh 4904153006 4246228452 4911305457 4822592866 3992084515 14815761 48474294 63690008 62234425 451220849 70689084114840")
 local tog = true
 local move = false
 local jit = Vector3.new(30,0,0)
@@ -1250,7 +1250,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
     Character["EmotimaskCute"].Handle.Velocity = jit
 end)
 
-local Head = "EmotimaskCute" --press f9 and find the hat that looks like a heads name and put it here
+local Head = "Accessory (MeshPartAccessory)" --press f9 and find the hat that looks like a heads name and put it here
 local x = -4   --Edit Position for head n +left and -Right
 local y = 0.2   --Edit Position for head up and down
 local z = 0 --Edit Position for head x3
