@@ -8,7 +8,7 @@ lol = true
 end
 local sprinting = false 
 local is = game:GetService("InsertService")
-local idleanim = is:LoadLocalAsset("rbxassetid://136078657506707")
+local idleanim = is:LoadLocalAsset("rbxassetid://90976955495973")
 local walkanim = is:LoadLocalAsset("rbxassetid://130213485744288")
 local sprintanim = is:LoadLocalAsset("rbxassetid://119558526211035")
 local randompart = Instance.new("Part",game:GetService("RunService"))
@@ -677,10 +677,10 @@ elseif k == "v" then
         stopanim()
         dancing = true
         task.wait(.005)
-        sound69.SoundId = customasset("Dances/bimbam.mp3")
+        sound69.SoundId = customasset("Dances/sillybilly.mp3")
         timeposcur = sound69.TimePosition 
 sound69:Play()
-        playanim(16361564081)
+        playanim(108058940444935)
     else
         stopanim()
         
