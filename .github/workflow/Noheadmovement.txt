@@ -598,7 +598,7 @@ task.wait(.005)
         sound69.SoundId = customasset("Dances/ElectroSwing.mp3")
         timeposcur = sound69.TimePosition 
 sound69:Play()
-        playanim(93684150668786)
+        playanim(93684150668786,1,10)
     else
         stopanim()
         
@@ -996,7 +996,7 @@ elseif k == "l" then
         sound69.SoundId = customasset("Dances/phonkyturn.mp3")
         timeposcur = sound69.TimePosition 
 sound69:Play()
-        playanim(89046713686252)
+        playanim(89046713686252,3)
     else
         stopanim()
         
